@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .container {
+            background-color: beige;
+            padding: 100px;
+            overflow: auto;
+        }
+        .left-side {
+            background-color: cadetblue;
+            width: 48%;
+            height: 450px;
+            float: left;
+        }
+        .right-side {
+            background-color: darkgray;
+            width: 50%;
+            height: 450px;
+            float: left;
+            overflow: hidden;
+        }
+        .form-item {
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .form-item>label {
+            display: block;
+        }
+        form {
+            padding-left: 10px;
+        }
+    </style>
+    <script type="text/javascript">
+        var totalTendered = 0;
+        var items = {
+            Snickers: 1.00,
+            Gusher: 1.50,
+            Gum: 0.25,
+            Soda: 1.00,
+            Chips: 1.50,
+            Water: 1.00
+        };
+        //Bag of items
+        var bag = [];
+        var getItems = function () {
+            return items;
+        }
+        
+        function enterMoney() {
+            var amount = document.getElementById("amount").value;
+            if (isNaN(amount) == false) {
+                totalTendered += amount;
+                document.getElementById("amountEntered").innerHTML = "$" + totalTendered;
+                document.getElementById("amount").value = 0;
+            } else {
+                alert("You entered the wrong amount");
+            }
+        }
+        function makeSelection(selection) {
+            if (!items[selection]) {
+                alert("No Item Exist");
+            } else {
+                var item_price = items[selection];
+                if (item_price <= totalTendered) {
+                    totalTendered = totalTendered - item_price;
+                    document.getElementById("amountEntered").innerHTML = "$" + totalTendered;
+                    return selection;
+                } else {
+                    alert("Not enough money to buy " + selection);
+                }
+            }
+        }
+        function getChange() {
+            if (!totalTendered) {
+                alert("There is no money to return");
+            }
+            var amountToReturn -= totalTendered;
+            //remove all the money
+            totalTendered = 0;
+            document.getElementById("amountEntered").innerHTML = "$" + totalTendered;
+            return amountToReturn;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="left-side">
+            <h2>User Input</h2>
+            <form>
+                <h4>Amount Tendered</h4>
+                <p id="amountEntered">$0.00</p>
+                <hr />
+                <div class="form-item">
+                    <label>Enter Amount</label>
+                    <input type="number" id="amount" />
+                </div>
+                <input type="button" value="Enter Money" onclick="enterMoney()" />
+                <hr />
+                <div class="form-item">
+                    <label>Selections</label>
+                    <input type="button" value="Snickers" onclick="makeSelection('Snickers')" />
+                    <input type="button" value="Gusher" onclick="makeSelection('Gusher')" />
+                    <input type="button" value="Gum" onclick="makeSelection('Gum')" />
+                    <input type="button" value="Soda" onclick="makeSelection('Soda')" />
+                    <input type="button" value="Chips" onclick="makeSelection('Chips')" />
+                    <input type="button" value="Water" onclick="makeSelection('Water')" />
+                </div>
+                <hr />
+                <input type="button" value="Return Change" onclick="getChange()" />
+            </form>
+        </div>
+        <div class="right-side">
+            <img src="https://www.amequipmentsales.com/wp-content/uploads/2015/12/usi3538.png" />
+        </div>
+    </div>
+</body>
+</html>

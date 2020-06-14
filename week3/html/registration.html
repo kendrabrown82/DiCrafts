@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .container {
+                background-color: beige;
+                padding: 100px;
+                overflow: auto;
+            }
+            .left-side {
+                background-color: cadetblue;
+                width: 48%;
+                height: 450px;
+                float: left;
+            }
+            .right-side{
+                background-color: darkgray;
+                width: 50%;
+                height: 450px;
+                float: left;
+            }
+            .form-item {
+                margin-top: 10px;
+                margin-bottom: 5px;
+            }
+            .form-item > label {
+                display: block;
+            }
+            form {
+                padding-left: 10px;
+            }
+        </style>
+        <script type="text/javascript">
+
+            var myCaptchaNumber = 12;
+            function formSubmitted() {
+                var enteredCaptcha = document.getElementById("form_captcha").value;
+                if(myCaptchaNumber == enteredCaptcha) {
+                    var name = document.getElementById("name").value;
+                    document.getElementById("entered_name").innerHTML = name;
+                    var email = document.getElementById("form_email").value
+                    document.getElementById("entered_email").innerHTML = email;
+                    var age = document.getElementById("form_age").value;
+                    document.getElementById("entered_age").innerHTML= "Your age is " + age;
+                    var bio = document.getElementById("form_bio").value;
+                    
+                    if(bio != ''){
+                        var bio_header = '<h5>My Bio</h5>';
+                        document.getElementById("entered_bio").innerHTML = bio_header + bio;
+                    }
+
+                } else {
+                    alert("You have not entered the correct captcha!");
+                } // main if 
+            }
+
+            // form clear
+            function clearForm() {
+                document.getElementById("name").value = '';
+                document.getElementById("entered_name").innerHTML = '';
+                document.getElementById("form_email").value = '';
+                document.getElementById("entered_email").innerHTML = '';
+                document.getElementById("form_age").value = '';
+                document.getElementById("entered_age").innerHTML = '';
+                document.getElementById("form_bio").value = '';
+                document.getElementById("entered_bio").innerHTML = '';
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="left-side">
+                <h2>Registration Information</h2>
+                <form>
+                    <div class="form-item">
+                        <label>Persons Name</label>
+                        <input type="text" id="name" />
+                    </div>
+                    <div class="form-item">
+                        <label>Email Address</label>
+                        <input type="email" id="form_email" />
+                    </div>
+                    <div class="form-item">
+                        <label>Age</label> 
+                        <input type="number" id="form_age" />
+                    </div>
+                    <div class="form-item">
+                        <label>Bio</label>
+                        <textarea id="form_bio" cols="20" rows="5"></textarea>
+                    </div>
+                    <div class="form-item">
+                        <label>Captcha</label>
+                        <input id="form_captcha" type="text" />
+                        <p>Enter the number <span id="captcha_number"></span> to prove your human.</p>
+                    </div>
+                    <input type="button" value="Submit Form" onclick="formSubmitted()" />
+                    <input type="button" value="Clear Me" onclick="clearForm()" />
+                </form>
+            </div>
+            <div class="right-side">
+                <h2>Entered Information</h2>
+                <p id="entered_name"></p>
+                <p id="entered_email"></p>
+                <p id="entered_age"></p>
+                <div id="entered_bio"></div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        document.getElementById("captcha_number").innerHTML = myCaptchaNumber;
+    </script>
+</html>

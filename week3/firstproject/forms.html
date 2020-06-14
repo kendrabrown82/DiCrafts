@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<head>
+    <title>Vending Machine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            overflow: auto;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+
+        }
+
+        #image {
+            max-width: 100%;
+            padding: 10px;
+            border-radius: 20px;
+            margin: auto;
+         
+        }
+
+        .head-class {
+            background: #344a72;
+            padding: 30px;
+            border-radius: 20px;
+               
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 40px;
+            font-family: 'Balsamiq Sans', cursive;
+        }
+
+        h3 {
+            color: white;
+            text-align: center;
+            font-size: 25px;
+            font-family: 'Balsamiq Sans', cursive;
+        }
+
+        .forms {
+            float: left;
+            width: 33%;
+            padding: 5px;
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            
+        }
+
+        .forms label {
+            color: rgb(93, 93, 114);
+            width: 100%;
+            font-size: 20px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .forms input {
+            width: 50%;
+            margin: 10px auto;
+            padding: 5px;
+            border: lightgray solid 1px;
+            border-radius: 5px;
+        }
+
+        .button {
+            background-color: lightgreen;
+            cursor: pointer;
+
+        }
+
+        .button:hover {
+            background: rgb(9, 175, 164)
+        }
+
+        select {
+            color: #667;
+            width: 75%;
+            font-size: 15px;
+            border-radius: 10px;
+        }
+
+        hr { 
+            height: 12px;
+            border: 0;
+            box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
+        }
+
+    </style>
+    
+    <!-- javascript  -->
+    <script type="text/javascript">
+
+    var totalTendered = 0;
+    var items = {
+        Snickers : 1.00,
+        Gusher : 1.50,
+        Gum : 0.25,
+        Soda : 1.00,
+        Chips: 1.50,
+        Water : 1.00
+    };
+
+    var bag = [];
+    var getItems = function() {
+        return items;
+        }
+
+    //pick out the item from the drop down menu, and then makes a call to makeSelection function to pick item and subract from total. you'll have to select the item from the drop down, then click on the Select Item button
+    function dropDown() {
+        var pickItem = document.getElementById('item');
+        var selectedItem = pickItem.options[pickItem.selectedIndex].value;
+        document.getElementById("selected_item").innerHTML = selectedItem;
+        makeSelection(selectedItem);
+    }
+
+    function enterMoney() {
+        var amount = document.getElementById("tender").value;
+        if(isNaN(amount) == false) {
+            totalTendered += Number(amount);
+            document.getElementById("entered_tender").innerHTML = "You have entered $" + totalTendered;
+            document.getElementById("tender").value = 0;
+                    
+        } else {
+            console.log("You entered the wrong amount");
+            alert("You entered the wrong amount");
+        }
+        
+    }
+
+    function makeSelection(selection) {
+        if(!items[selection]) {
+            console.log("No Item Exist");
+        } else {
+            var item_price = items[selection];
+            if(item_price <= totalTendered) {
+                totalTendered = totalTendered - item_price;
+                document.getElementById("entered_tender").innerHTML = "Total Remaining $" + totalTendered;
+                return selection;
+            } else {
+                console.log("Not enough money to buy " + selection);
+            }
+        }
+    }
+
+    function getChange() {
+        if(!totalTendered) {
+            console.log("There is no money to return");
+            }
+        var amountToReturn = totalTendered;
+        //remove all the money
+        //totalTendered = 0; // <----- commented this out as I wanted to see the remainder
+        document.getElementById("return_change").innerHTML = "Your change is $" + totalTendered;
+        document.getElementById("entered_tender").innerHTML = "";
+        return amountToReturn;
+        
+    }
+    </script>
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="head-class">
+            <h1>Vending Machine Galore</h1>
+            <h3>Vending Goodness One Customer At a Time</h3>
+            <img id="image" src="https://cdn.cnn.com/cnnnext/dam/assets/171004155619-singapore-vending-machine-chef-in-box-008.jpg">
+        </div>
+    </div>
+    
+    <hr>
+
+    <!-- Inserting Money -->
+    <div class="forms">
+        <form>
+            <label class="money">Insert Money</label>
+            <input id="tender" type="number" step="0.01" min="0"> 
+            <input type="button" value="Submit Money" onclick="enterMoney()">
+        </form>
+
+        <div>
+            <p id="entered_tender"></p>
+        </div>  
+    </div>  
+
+    
+    <!-- The Inventory -->
+    <div class="forms">
+        <form>
+            <label>Inventory</label>
+            <select id="item">
+                <option value="Snickers">Snickers - $1.00</option>
+                <option value="Gusher">Gusher - $1.50</option>
+                <option value="Gum">Gum - $.25</option>
+                <option value="Soda">Soda - $1</option>
+                <option value="Chips">Chips - $1.50</option>
+                <option value="Water">Water - $1.50</option>
+            </select>
+            <input type="button" value="Select Item" onclick="dropDown()">
+            <!--separate paragraph to display the selected item-->
+            <div>
+                <p id="selected_item"></p>
+            </div>  
+        </form>
+
+        <p id="selected_item"></p>
+    </div>     
+
+    <!-- Getting Change -->
+    <div class="forms">
+        <form>
+            <input class="button" type="button" value="Get Change" onclick="getChange()">
+            <p id="return_change"></p>
+        </form>
+    </div>     
+    
+</body>
+</script>
+</html>
