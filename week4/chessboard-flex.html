@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .board {
+            display: flex;
+            flex-direction: row;
+            border: 5px solid gray;
+            height: 600px;
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        .blue {
+            background-color: blue;
+            flex: 1;
+        }
+
+        .green {
+            flex: 1;
+            background-color: green;
+        }
+
+        .random {
+            background-color: red;
+            flex: 1
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        
+    </style>
+
+
+    <!-- alternating starting column color to create checkered pattern -->
+    <div class="board">
+        <div class="column">
+            <div class="blue"></div>
+            <div class="random"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+        </div>
+
+        <div class="column">
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="random"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+        </div>
+
+        <div class="column">
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+        </div>
+
+        <div class="column">
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+        </div>
+
+        <div class="column">
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+        </div>
+
+        <div class="column">
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+        </div>
+
+        <div class="column">
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+        </div>
+
+        <div class="column">
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+            <div class="green"></div>
+            <div class="blue"></div>
+        </div>
+
+
+    </div>
+</body>
+</html>
