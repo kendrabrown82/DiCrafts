@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Chessboard with Bootstrap</title>
+
+    <style>
+        .container {
+            height: 1200px;
+        }
+
+        .col-2 {
+            height: 200px;
+        }
+    </style>
+    <script type="text/javascript">
+        function hideOrShowButton() {
+        
+        var chessboard = document.getElementById('chessboard');
+        console.log(chessboard.style.display);
+        if (chessboard.style.display == 'none') {
+            chessboard.style.display = 'block';
+            chessButton.value = "Hide Board"
+        } else {
+            chessboard.style.display = 'none'
+            chessButton.value = 'Show Board'
+        }
+    }
+
+    // one way to write the hideOrShowWarning() function
+    // function hideOrShowWarning() {
+    //     var warnings = document.getElementsByClassName('bg-warning');
+    //     for(var i = 0; i < warnings.length; i++) {
+    //         console.log("Warning");
+    //         if (warnings[i].style.display == 'none') {
+    //             warnings[i].style.display = 'block';
+    //         } else {
+    //             warnings[i].style.display = 'none';
+    //         }
+            
+    //     }
+        
+    // }
+
+    // another way to write the hideOrShowWarning() function using a separate variable to hold display
+    function hideOrShowWarning() {
+      var warnings = document.getElementsByClassName('bg-warning');
+      var newDisplay = '';
+
+      if (warnings[0].style.display == 'none') {
+        newDisplay = 'block';
+      } else {
+        newDisplay = 'none';
+      }
+
+      for ( var i = 0 ; i < warnings.length ; i++ ) {
+        warnings[i].style.display = newDisplay;
+      }
+    }
+
+    
+    function hideOrShowDanger() {
+        var dangers = document.getElementsByClassName('bg-danger');
+        var display = '';
+        if (dangers[0].style.display == 'none') {
+            display = 'block';
+        } else {
+            display = 'none';
+        }
+
+        for(var i = 0; i < dangers.length; i++) {
+            dangers[i].style.display = display; 
+            
+        }
+    }
+
+
+    </script>
+    
+</head>
+<body>
+    <input type="button" value="Hide/Show Board" id=chessButton onclick="hideOrShowButton()">
+    <input type="button" value="Hide warning squares" id=warningButton onclick="hideOrShowWarning()">
+    <input type="button" value="Hide danger squares" id=dangerButton onclick="hideOrShowDanger()">
+   
+
+    <div id="chessboard" class="container bg-dark">
+        <div class="row">
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+            <div class="col-2 bg-danger"></div>
+            <div class="col-2 bg-warning"></div>
+        </div>
+
+    </div>
+    
+</body>
+</html>
