@@ -22,22 +22,31 @@
         }
 
         .green {
-            flex: 1;
             background-color: green;
+            flex: 1;
         }
-
+        
+        /* using this to confirm column or row flex */
         .random {
             background-color: red;
             flex: 1
         }
 
+        .blue:hover{
+            background-color: coral;
+        }
+
+        .green:hover{
+            background-color: coral;
+        }
+
+        /* this class builds the columns with a flex direction of column going downwards */
+
         .column {
             display: flex;
             flex-direction: column;
             flex: 1;
-        }
-
-        
+        }        
     </style>
 
 
@@ -100,7 +109,7 @@
 
         <div class="column">
             <div class="green"></div>
-            <div class="blue"></div>
+            <div class="random"></div>
             <div class="green"></div>
             <div class="blue"></div>
             <div class="green"></div>
@@ -125,13 +134,13 @@
             <div class="blue"></div>
             <div class="green"></div>
             <div class="blue"></div>
-            <div class="green"></div>
+            <div class="random"></div>
             <div class="blue"></div>
             <div class="green"></div>
             <div class="blue"></div>
         </div>
 
+    </div> <!-- board div -->
 
-    </div>
 </body>
 </html>
