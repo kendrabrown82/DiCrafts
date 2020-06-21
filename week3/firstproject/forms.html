@@ -117,7 +117,7 @@
     function dropDown() {
         var pickItem = document.getElementById('item');
         var selectedItem = pickItem.options[pickItem.selectedIndex].value;
-        document.getElementById("selected_item").innerHTML = selectedItem;
+        
         makeSelection(selectedItem);
     }
 
@@ -143,8 +143,12 @@
             if(item_price <= totalTendered) {
                 totalTendered = totalTendered - item_price;
                 document.getElementById("entered_tender").innerHTML = "Total Remaining $" + totalTendered;
+                //pushing the selections in the bag array which will be displayed
+                bag.push(selection);
+                document.getElementById("selected_item").innerHTML = bag;
                 return selection;
             } else {
+                alert("Not enough money to buy " + selection);
                 console.log("Not enough money to buy " + selection);
             }
         }
@@ -204,13 +208,13 @@
                 <option value="Water">Water - $1.50</option>
             </select>
             <input type="button" value="Select Item" onclick="dropDown()">
-            <!--separate paragraph to display the selected item-->
-            <div>
-                <p id="selected_item"></p>
-            </div>  
-        </form>
+            <p>You Have Selected The Following Items</p>
 
-        <p id="selected_item"></p>
+            <!--separate text area to display the selected item-->
+            <div>
+                <textarea id="selected_item" cols="30" rows="5"></textarea>
+            </div>
+        </form>
     </div>     
 
     <!-- Getting Change -->
