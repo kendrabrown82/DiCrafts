@@ -1,0 +1,56 @@
+<html>
+  <head>
+    <title>My Website Title</title>
+
+
+	<link 
+	rel="stylesheet" 
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+  crossorigin="anonymous">
+  
+    <script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        var submitButton = document.getElementById('submit-button');
+        submitButton.addEventListener('click', submitForm); 
+    })
+
+    
+
+    function submitForm(){
+      event.preventDefault();
+
+      var inputValue = document.getElementById('text-input').value;
+      if (!inputValue || inputValue == '') {
+        // document.getElementById('error_message').style.display = "block";
+
+        var errorMessage = document.createElement('div');
+        errorMessage.innerHTML = "empty input";
+
+        var container = document.getElementById('main_container');
+        container.appendChild(errorMessage);
+      }
+
+      var object = {
+        "textInput": inputValue
+      };
+      console.log(object);
+
+      document.getElementById('text-input').value = '';
+    }
+    </script>
+  </head>
+  <body>
+    <div id="main_container" class="container">
+      <div id="error_message" style="display:none;">
+        there was an empty input
+      </div>
+
+      <form>
+        <input type="text" id="text-input"/>
+        <input type="submit" id="submit-button">
+      </form>
+    </div>
+
+  </body>
+</html>
