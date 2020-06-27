@@ -1,0 +1,20 @@
+*******************************************************
+**  BUG REPORT
+*******************************************************
+
+The transaction filtering is case sensitive. That's annoying!
+
+*******************************************************
+*******************************************************
+
+Bug is resolved by changing the searchString value to all lowercase, then changing the values compared against it with indexOf() to lowercase as wellß
+
+document.getElementById('search-input').addEventListener('input', function (e) {
+		var searchString = e.target.value.toLowerCase();
+		var filteredData = fullTransactionData.filter(function (transaction) {
+			var foundInName = transaction.name.toLowerCase().indexOf(searchString) > -1;
+			var foundInFor = transaction.for.toLowerCase().indexOf(searchString) > -1;
+			var foundInDate = transaction.date.toLowerCase().indexOf(searchString) > -1;
+			var foundInAmount = transaction.amount.indexOf(searchString) > -1;
+			return foundInName || foundInFor || foundInDate || foundInAmount;
+		});

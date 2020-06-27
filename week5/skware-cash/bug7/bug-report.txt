@@ -1,0 +1,12 @@
+*******************************************************
+**  BUG REPORT
+*******************************************************
+
+Every row in the transaction list has a weird comma preceding it...
+
+*******************************************************
+*******************************************************
+
+The bug is due to join() not having '' 
+I.E. join('')
+finalHTML += transactionsHTML.join('');

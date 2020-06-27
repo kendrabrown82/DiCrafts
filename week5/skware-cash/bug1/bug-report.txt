@@ -1,0 +1,12 @@
+*******************************************************
+**  BUG REPORT
+*******************************************************
+
+Hey, the list of transactions isn't loading - what gives?!
+
+*******************************************************
+*******************************************************
+
+Bug is due to the following not having a closing quote after the div in index.html
+
+var finalHTML = '<div class="buffer">TRANSACTIONS</div>;

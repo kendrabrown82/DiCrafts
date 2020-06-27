@@ -1,0 +1,14 @@
+*******************************************************
+**  BUG REPORT
+*******************************************************
+
+The "New" button isn't changing to the :hover color when 
+when hovered over
+
+*******************************************************
+*******************************************************
+
+Due to inline styling acting as an override
+<div class="new" style="background-color: #15D642;">New</div>
+
+moved the background-color to css file

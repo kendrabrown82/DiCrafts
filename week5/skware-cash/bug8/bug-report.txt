@@ -1,0 +1,14 @@
+*******************************************************
+**  BUG REPORT
+*******************************************************
+
+The transactions list is only filtering when I press the
+enter key. I thought it was supposed to filter as I type?
+
+*******************************************************
+*******************************************************
+
+The bug is due to listener type needing to be 'keydown' or 'input' instead of 'change'
+
+document.getElementById('search-input').addEventListener('input', function (e)
+

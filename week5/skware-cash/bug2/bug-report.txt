@@ -1,0 +1,13 @@
+*******************************************************
+**  BUG REPORT
+*******************************************************
+
+The list of transactions still isn't loading!
+
+*******************************************************
+*******************************************************
+
+Bug is related to the path to javascript files not being correct
+
+<script type="text/javascript" src="../data.js"></script>
+<script type="text/javascript" src="../index.js"></script>
