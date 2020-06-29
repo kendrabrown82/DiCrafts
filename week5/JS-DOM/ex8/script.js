@@ -9,22 +9,59 @@
 var addButton = document.getElementById('add-button');
 
 addButton.addEventListener('click', function() {
+
     var toDoList = document.getElementById('todo-list');
     var newItem = document.getElementById('description');
-    var newLi = document.createElement('li');
-    var newButton = document.createElement('button');
-    var liName = '';
-    // add li to ul, take input value and assign to newly created li, then clear the input field
-    toDoList.appendChild(newLi);
-    newLi.innerHTML = newItem.value;
-    newLi.setAttribute('id', newItem.value) //<-- adding id to each newly created li item
-    liName = newLi.innerText;
-    
-    newButton.innerHTML= 'delete item'; // <-- adding name to button
-    newItem.value = '';
+    // proceed if there's a value in the input field
+    if (newItem.value != '') {
+        var newLi = document.createElement('li');
+        newLi.className = 'todo-item';
+        
+        // add li to ul, take input value and assign to newly created li, then clear the input field
+        toDoList.appendChild(newLi);
+        newLi.innerHTML = newItem.value;
+        newItem.value = '';
 
-    newLi.appendChild(newButton); // <-- appending new button as child to 'li' item
-    newButton.setAttribute('id', liName);
+        // send the collection of li to a variable by classname
+        var todoItems = document.getElementsByClassName('todo-item');
+        // add event listener and use event.target to strike through items
+        for (var i = 0; i < todoItems.length; i++) {
+            todoItems[i].addEventListener('click', function(event) {
+                if (event.target.matches('li')) { // <-- used target.matches to specify li items and not children (delete button)
+                    event.target.style.textDecoration = 'line-through';
+                }
+                    
+            })
+        }
+    }
+        // create delete buttons and appending as children to created li items
+        var delButton = document.createElement('button');
+        delButton.className = 'dbuttons';
+        delButton.innerHTML= 'delete item'; // <-- adding name to button
+        newLi.appendChild(delButton); // <-- appending new button as child to 'li' item
+
+        // create collection of delete buttons and add eventlistener to delete parent node
+        var dButtons = document.getElementsByClassName('dbuttons');
+        for (var i = 0; i < dButtons.length; i++) {
+            dButtons[i].addEventListener('click', function(event) {
+                event.currentTarget.parentNode.remove();
+            })    
+ 
+        }
+       
    
 });
+
+        
+
+    
+        
+
+
+    
+
+
+
+
+
 
