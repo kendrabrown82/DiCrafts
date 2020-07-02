@@ -1,0 +1,153 @@
+<!-- 
+    Have two players that alternative between the players on each turn
+    One player should be X's, the other player should be 0's
+    When on player gets 3 in a row, they win! Print the winner to screen
+    If a player has already taken a space, the other space cannot be taken again
+    Bonus points if you can create a scoreboard for multiple games and reset the game 
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+            #board {
+                margin-top: 50px;
+            }
+
+            h2 {
+                font-size: 30px;;
+            }
+        </style>
+    </head>
+
+    <!-- body -->
+    <body>
+        <h1 class="text-center">Tic Tac Toe</h1>
+        <div class="row">
+            <div id="player1" class="col-md-6 text-center">
+                <h2>Player 1</h2>
+                <p id="p1Score"></p>
+            </div>
+            <div id="player2" class="col-md-6 text-center">
+                <h2>Player 2</h2>
+                <p id="p2Score"></p>
+            </div>
+        </div>
+        <div class="container" id="board"></div>
+    </body>
+
+    <!-- Script -->
+    <script type="text/javascript">
+        function makeBoard(boardElement) {
+            var rows = 3;
+            var columns = 3;
+            for (let i = 0; i < rows; i++) {
+                var rowElement = document.createElement('div');
+                rowElement.className = 'row';
+                if(!boardArray[i]) {
+                    boardArray[i] = [];
+                }
+                for (let j = 0; j < columns; j++) {
+                    var columnElement = document.createElement('div');
+                    columnElement.className = 'col-sm-4 border text-center';
+                    columnElement.innerHTML = "Row " + i + " Column " + j;
+                    columnElement.setAttribute("style" ,"height:100px");
+                    columnElement.id = i + '-' + j;
+                    columnElement.addEventListener('click', function() {
+                        // Initialize value to 'X'
+                        this.innerHTML = aPlayer;
+
+                        //  Check if element has something. If not, push selection to movesMade array to keep track of squares already selected
+                        if (movesMade.includes(this)) {
+                            alert('A selection has already been made here');
+                        } else {
+                            movesMade.push(this);
+                        }
+                        
+                        checkWinX();
+                        checkWinO();
+                        // If movesMade array has 9 elements, it means it's a tie
+                        if (movesMade.length > 8) {
+                            alert("It's a Tie!")
+                        }
+
+                        // After the check for wins are made, run function to switch 'X' and 'O' and assign value to 'aPlayer' variable which will be referenced above
+                        aPlayer = switchPlayer(this.innerText);
+                        console.log(aPlayer);
+                    });
+
+                    boardArray[i][j] = columnElement;
+                    rowElement.appendChild(columnElement);
+                }//end for j
+                boardElement.appendChild(rowElement);
+            }//end for i
+            console.log(boardArray);
+        }//end function makeBoard
+
+        // Functions
+        function checkWinX() {
+            if( (boardArray[0][0].innerHTML == 'X' && boardArray[0][1].innerHTML == 'X' && boardArray[0][2].innerHTML == 'X') ||
+                (boardArray[1][0].innerHTML == 'X' && boardArray[1][1].innerHTML == 'X' && boardArray[1][2].innerHTML == 'X') ||
+                (boardArray[2][0].innerHTML == 'X' && boardArray[2][1].innerHTML == 'X' && boardArray[2][2].innerHTML == 'X') ||
+                (boardArray[0][0].innerHTML == 'X' && boardArray[1][0].innerHTML == 'X' && boardArray[2][0].innerHTML == 'X') ||
+                (boardArray[0][1].innerHTML == 'X' && boardArray[1][1].innerHTML == 'X' && boardArray[2][1].innerHTML == 'X') ||
+                (boardArray[0][2].innerHTML == 'X' && boardArray[1][2].innerHTML == 'X' && boardArray[2][2].innerHTML == 'X') ||
+                (boardArray[0][0].innerHTML == 'X' && boardArray[1][1].innerHTML == 'X' && boardArray[2][2].innerHTML == 'X') ||
+                (boardArray[0][2].innerHTML == 'X' && boardArray[1][1].innerHTML == 'X' && boardArray[2][0].innerHTML == 'X') ) {
+                    alert("Team X Wins!");
+                    p1Count++;
+                    purgeAll();
+                }
+                document.getElementById("p1Score").innerHTML = p1Count;
+                
+            }
+        function checkWinO() {
+            if( (boardArray[0][0].innerHTML == 'O' && boardArray[0][1].innerHTML == 'O' && boardArray[0][2].innerHTML == 'O') ||
+                (boardArray[1][0].innerHTML == 'O' && boardArray[1][1].innerHTML == 'O' && boardArray[1][2].innerHTML == 'O') ||
+                (boardArray[2][0].innerHTML == 'O' && boardArray[2][1].innerHTML == 'O' && boardArray[2][2].innerHTML == 'O') ||
+                (boardArray[0][0].innerHTML == 'O' && boardArray[1][0].innerHTML == 'O' && boardArray[2][0].innerHTML == 'O') ||
+                (boardArray[0][1].innerHTML == 'O' && boardArray[1][1].innerHTML == 'O' && boardArray[2][1].innerHTML == 'O') ||
+                (boardArray[0][2].innerHTML == 'O' && boardArray[1][2].innerHTML == 'O' && boardArray[2][2].innerHTML == 'O') ||
+                (boardArray[0][0].innerHTML == 'O' && boardArray[1][1].innerHTML == 'O' && boardArray[2][2].innerHTML == 'O') ||
+                (boardArray[0][2].innerHTML == 'O' && boardArray[1][1].innerHTML == 'O' && boardArray[2][0].innerHTML == 'O') ) {
+                    alert("Team O Wins!");
+                    p2Count++;
+                    purgeAll();
+                }   
+                document.getElementById("p2Score").innerHTML = p2Count;
+                
+            }
+        
+        //function to switch between 'X' and 'O'...looks to carry over in between games
+        var switchPlayer = function (player) {
+            if (player == 'X') {
+                return 'O';
+            } else {
+                return 'X'
+            }
+        }    
+
+        // function that does a purge on all elements within container, then calls makeboard() to create a new tic tac toe board, then removes all items from movesMade array
+        var purgeAll = function() {
+            board.innerHTML = '';
+            makeBoard(board);
+            movesMade.length = 0;
+        }
+
+        var p1Score = document.getElementById("p1Score");
+        var p2Score = document.getElementById("p2Score");
+
+        var board = document.getElementById("board");
+        var boardArray = [];
+
+        // array to store the moves that have been made, and aPlayer initialized to 'X' to toggle between the two options. Also variables to keep track of games won.
+        var movesMade = [];
+        var aPlayer = 'X'
+        var p1Count = 0;
+        var p2Count = 0;
+
+        makeBoard(board);
+    </script>
+</html>
