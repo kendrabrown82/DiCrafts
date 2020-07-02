@@ -70,7 +70,8 @@
                         checkWinO();
                         // If movesMade array has 9 elements, it means it's a tie
                         if (movesMade.length > 8) {
-                            alert("It's a Tie!")
+                            alert("It's a Tie!");
+                            purgeAll();
                         }
 
                         // After the check for wins are made, run function to switch 'X' and 'O' and assign value to 'aPlayer' variable which will be referenced above
