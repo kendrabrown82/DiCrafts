@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tic Tac Toe</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+         crossorigin="anonymous">
+            
+             <style>
+             .container {
+                 background-color:antiquewhite;
+                 padding: 2%;
+             }
+             .col-sm-6 {
+                 margin-top: 20px;
+                 height: 50px;
+                 font-weight: bold;
+                 font-size: 1.5em;
+                 color: white;
+             }
+             .col-sm-4 {
+                 border: 1px solid black;
+                 text-size-adjust: 100px;
+             }
+             .btn {
+                 margin: auto;
+             }
+             #player1 {
+                 color: black;
+                 border: 2px solid black;
+             }
+             #player2 {
+                 color:black;
+                 border: 2px solid black;
+             }
+         </style>
+
+
+    </head>
+    <body>
+        <div class="container" id="header">
+        <h1 class="text-center">Tic Tac Toe</h1>
+            <div class="row">
+                <div class="col-sm-6 text-center" id="player1">Player 1 (X)</div>
+                <div class="col-sm-6 text-center" id="player2">Player 2 (O)</div>
+            </div>
+            <br/>
+        </div>
+        <div class="container" id="board">
+            <button type="button" class="btn btn-primary" id="startButton">Start Game</button>
+        </div>
+        
+        <script type="text/javascript">
+           var boardArray = [];
+           var player1 = document.getElementById("player1");
+           var player2 = document.getElementById("player2");
+           player1.style.backgroundColor = "red";
+           var p1Score = 0;
+           var p2Score = 0;
+           var draws = 0;
+           //Empty div to store scoreboard
+           var score = document.createElement("div");
+           var song = document.createElement("div");
+           var createBoard = function() {
+                var rows = 3;
+                var columns = 3;
+                for(var i = 0; i < rows; i++) {
+                    var newRow = document.createElement('div');
+                    newRow.className = "row";
+                    if(!boardArray[i]) {
+                        boardArray[i] = [];
+                    }
+                    for(var j = 0; j < columns; j++) {
+                        var newColumn = document.createElement('div');
+                        newColumn.className = "col-sm-4 border border-dark display-1 text-center text-align-middle font-weight-bold ";
+                        newColumn.innerHTML = '';
+                        newColumn.id = i + '-' + j;
+                        newColumn.setAttribute("style", "height: 120px");
+                        newColumn.addEventListener("click", turn);
+                        boardArray[i][j] = newColumn;
+                        newRow.appendChild(newColumn);
+                    }
+                    board.appendChild(newRow);
+                }
+                //Creates a reset button for the board
+                var newButton = document.createElement('button');
+                newButton.className = "btn btn-primary";
+                newButton.id = "resetButton";
+                newButton.innerHTML = "Reset Game";
+                newButton.addEventListener("click", resetBoard);
+                board.appendChild(newButton);
+                //Scoreboard attached to bottom of board but empty div
+                board.append(score);
+                board.append(song)
+                //Removes start button after board is generated
+                start.remove();
+                console.log(boardArray);
+            }
+            //Switches between players, checks the board after every move
+            function turn() {
+                if(player1.style.backgroundColor == "red" && this.innerHTML == "") {
+                    this.innerHTML = "X";
+                    checkWin();
+                    checkDraw();
+                    player1.style.backgroundColor = "white";
+                    player2.style.backgroundColor = "red";
+                }
+                else if(player2.style.backgroundColor == "red" && this.innerHTML == ""){
+                    this.innerHTML = "O";
+                    checkWin();
+                    checkDraw();
+                    player2.style.backgroundColor = "white";
+                    player1.style.backgroundColor = "red";
+                }
+            }
+            function resetBoard() {
+               /* for(var i = 0; i < boardArray.length; i++) {
+                    for(var j = 0; j < boardArray.length; j++) {
+                        boardArray[i][j].innerHTML = "";
+                    }
+                }*/
+                board.innerHTML = "";
+                createBoard();
+            }
+            //Checks to see whether player 1 or 2 won
+            function checkWin() {
+                if( (boardArray[0][0].innerHTML == 'X' && boardArray[0][1].innerHTML == 'X' && boardArray[0][2].innerHTML == 'X') ||
+                    (boardArray[1][0].innerHTML == 'X' && boardArray[1][1].innerHTML == 'X' && boardArray[1][2].innerHTML == 'X') ||
+                    (boardArray[2][0].innerHTML == 'X' && boardArray[2][1].innerHTML == 'X' && boardArray[2][2].innerHTML == 'X') ||
+                    (boardArray[0][0].innerHTML == 'X' && boardArray[1][0].innerHTML == 'X' && boardArray[2][0].innerHTML == 'X') ||
+                    (boardArray[0][1].innerHTML == 'X' && boardArray[1][1].innerHTML == 'X' && boardArray[2][1].innerHTML == 'X') ||
+                    (boardArray[0][2].innerHTML == 'X' && boardArray[1][2].innerHTML == 'X' && boardArray[2][2].innerHTML == 'X') ||
+                    (boardArray[0][0].innerHTML == 'X' && boardArray[1][1].innerHTML == 'X' && boardArray[2][2].innerHTML == 'X') ||
+                    (boardArray[0][2].innerHTML == 'X' && boardArray[1][1].innerHTML == 'X' && boardArray[2][0].innerHTML == 'X') ) {
+                        alert("Player 1 Wins!");
+                        resetBoard();
+                        p1Score++;
+                        renderScore();
+                        console.log("Player 1: " + p1Score + " Player 2: " + p2Score + " Draws: " + draws);
+                        playSong();
+                        removeSong()
+                        return true;
+                    }
+           else if( (boardArray[0][0].innerHTML == 'O' && boardArray[0][1].innerHTML == 'O' && boardArray[0][2].innerHTML == 'O') ||
+                    (boardArray[1][0].innerHTML == 'O' && boardArray[1][1].innerHTML == 'O' && boardArray[1][2].innerHTML == 'O') ||
+                    (boardArray[2][0].innerHTML == 'O' && boardArray[2][1].innerHTML == 'O' && boardArray[2][2].innerHTML == 'O') ||
+                    (boardArray[0][0].innerHTML == 'O' && boardArray[1][0].innerHTML == 'O' && boardArray[2][0].innerHTML == 'O') ||
+                    (boardArray[0][1].innerHTML == 'O' && boardArray[1][1].innerHTML == 'O' && boardArray[2][1].innerHTML == 'O') ||
+                    (boardArray[0][2].innerHTML == 'O' && boardArray[1][2].innerHTML == 'O' && boardArray[2][2].innerHTML == 'O') ||
+                    (boardArray[0][0].innerHTML == 'O' && boardArray[1][1].innerHTML == 'O' && boardArray[2][2].innerHTML == 'O') ||
+                    (boardArray[0][2].innerHTML == 'O' && boardArray[1][1].innerHTML == 'O' && boardArray[2][0].innerHTML == 'O') ) {
+                        alert("Player 2 Wins!");
+                        resetBoard();
+                        p2Score++;
+                        renderScore();
+                        console.log("Player 1: " + p1Score + " Player 2: " + p2Score + " Draws: " + draws);
+                        playSong();
+                        removeSong();
+                        return true;
+                    }
+                else {
+                    return false;
+                }
+                }
+            //Checks if the board is full and if player 1 or 2 already won; if not it's a draw
+            function checkDraw() {
+                var count = 0;
+                for(var i = 0; i < boardArray.length; i++) {
+                    for(var j = 0; j < boardArray.length; j++) {
+                        if(boardArray[i][j].innerHTML != "") {
+                            count++;
+                        }
+                    }
+                }
+                if(count == 9 && !checkWin()) {
+                    alert("It's a draw!");
+                    resetBoard();
+                    draws++;
+                    renderScore();
+                    console.log("Player 1: " + p1Score + " Player 2: " + p2Score + " Draws: " + draws);
+                }
+            }
+            function renderScore() {
+                var scoreHTML = `
+                <h3 class="text-center">Scoreboard</h3>
+                <div class= "row">
+                    <div class= "col-sm-4 border text-center">Player 1</div>
+                    <div class= "col-sm-4 border text-center">Player 2</div>
+                    <div class= "col-sm-4 border text-center">Draws</div>
+                    </div>
+                    <div class= "row">
+                    <div class= "col-sm-4 border text-center">${p1Score}</div>
+                    <div class= "col-sm-4 border text-center">${p2Score}</div>
+                    <div class= "col-sm-4 border text-center">${draws}</div>
+                    </div>
+                `
+                score.innerHTML = scoreHTML;
+            }
+
+            function playSong() {
+                var songHTML = `
+                <div class="youtube">
+                <iframe width="200" height="100" src="https://www.youtube.com/embed/De9OoPa67-8?start=16" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>`
+
+                song.innerHTML = songHTML;
+            }
+
+            function removeSong() {
+                song.innerHTML = '';
+
+            }
+           var board = document.getElementById("board");
+           var start = document.getElementById("startButton");
+           start.addEventListener("click", createBoard);
+        </script>
+    </body>
+</html>
