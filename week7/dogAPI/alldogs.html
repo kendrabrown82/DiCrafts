@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            console.log("ready!");
+
+            var imageHolder = document.getElementById("imageHolder");
+            var generateButton = document.getElementById("generateButton");
+            var breedsElement = document.getElementById("breeds");
+            var doggieList = document.getElementById("doggieList");
+
+           
+
+            $.get("https://dog.ceo/api/breeds/list/all", function (data) {
+                console.log("Checking All Breeds Endpoint");
+                console.log(data);
+                var breeds = data.message;
+                for (const key in breeds) {
+                    var doggieOption = `<option value="${key}">${key}</option>`;
+                    doggieList.insertAdjacentHTML('beforeend', doggieOption);
+                }
+            });
+            $.get("https://dog.ceo/api/breeds/image/random", function (data) {
+                appendImageWay2(data);
+            });
+
+            generateButton.addEventListener('click', function callbackForNewImage() {
+                $.get("https://dog.ceo/api/breeds/image/random", function (data) {
+                    appendImageWay2(data);
+                });
+            })
+
+            doggieList.addEventListener('change', function() {
+                var current_breed = $(this).val();
+                $.get(`https://dog.ceo/api/breed/${current_breed}/images`, function(randImg) {
+                    appendRandomImg(randImg);
+                })
+                
+            });
+
+            //Appends the javascript
+            function appendImageWay1(data) {
+                console.log("Apending Way 1");
+                var imageElement = document.createElement("img");
+                imageElement.src = data.message;
+                imageElement.style.height = "200px";
+                imageElement.style.width = "200px";
+                imageHolder.appendChild(imageElement);
+            }
+            //Appends the button string literal
+            function appendImageWay2(data) {
+                console.log("Apending Way 2");
+                var imageElement = `<img width="200px" height="200px" src="${data.message}" />`;
+                imageHolder.insertAdjacentHTML('beforeend', imageElement);
+            }
+
+            //Appends random image for specific breed
+            function appendRandomImg(data) {
+                console.log("Apending Random Image");
+                var imageElement = document.createElement("img");
+                
+                var oneItem = data.message[Math.floor(Math.random() * data.message.length)]
+                console.log(oneItem);
+                console.log(data.message.length)
+                imageElement.src = oneItem;
+                imageElement.style.height = "200px";
+                imageElement.style.width = "200px";
+                imageHolder.appendChild(imageElement);
+            }
+
+        }); // document ready
+    </script>
+</head>
+<body>
+    <h1>Dogs</h1>
+    <div id="imageHolder">
+    </div>
+    <button class="btn btn-success" id="generateButton"> Generate Image</button>
+    <select id="doggieList">
+    </select>
+    <div id="breeds">
+    </div>
+</body>
+</html>
