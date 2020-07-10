@@ -1,0 +1,9 @@
+
+Here is your key: 8c10a0df
+
+Please append it to all of your API requests,
+
+OMDb API: http://www.omdbapi.com/?i=tt3896198&apikey=8c10a0df
+
+Click the following URL to activate your key: http://www.omdbapi.com/apikey.aspx?VERIFYKEY=a2c1fef9-eeab-4c0f-91e6-abe814984744
+If you did not make this request, please disregard this email.
