@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -13,8 +14,9 @@
         var mButton = document.getElementById("getMultItems"); 
         var sButton = document.getElementById('getOneItem');
         var submitButton = document.getElementById('submitButton')
+        var cards = document.getElementById("cards")
 
-
+        
         // Button to retrieve multiple items
         mButton.addEventListener('click', function() {
             var apiKey = 'b829fc58';
@@ -34,19 +36,25 @@
 
         // Search for items
         submitButton.addEventListener('click', function() {
+            // getting the values for filters 
             var movieSelection = document.getElementById('movieSelection').value;
+            var yearChoice = document.getElementById("releaseYear").value;
+            var typeChoice = document.getElementById("movieSeriesChoice").value;
             var apiKey = 'b829fc58';
-            $.get(`https://www.omdbapi.com/?apikey=${apiKey}&type=movie&s=${movieSelection}`, function (data) {
-                addMultiple(data);
+            
+            // seems a variable can have a blank value and the url will still work as long as formatting is correct
+            $.get(`https://www.omdbapi.com/?apikey=${apiKey}&s=${movieSelection}&y=${yearChoice}&type=${typeChoice}`, function (data) {
+                addMultiple(data); 
             });
         });
+
 
         //---------------- FUNCTIONS ------------------------//
 
         // function to get multiple items
         function addMultiple(data) {
             // clear the existing item in the div before adding items
-            movieBody.innerHTML = '';
+            cards.innerHTML = '';
             for (var i = 0; i < data.Search.length; i++) { 
                 var title = data.Search[i].Title;
                 var year = data.Search[i].Year;
@@ -55,17 +63,24 @@
                 var poster = data.Search[i].Poster;
                 
                 var movieContainer = document.createElement('div');
-                // using template literal to append items
+
+                // creating a "card" div for each item by using a template literal
                 var movieInfo = 
-                `<div class="movies">
-                    <p>Title: ${title}, Year: ${year}, IMDB ID: ${imdbID}, Type: ${type}</p>
-                    <img class="posters" src="${poster}">
-                </div>
-                
                 `
-                movieContainer.innerHTML = movieInfo;
-                console.log(movieInfo);
-                movieBody.appendChild(movieContainer);
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="${poster}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">${title}</h5>
+                            <p class="card-text">Year: ${year}, IMDB ID: ${imdbID}, Type: ${type}</p>
+                        </div>
+                    </div>
+                </div>
+                `
+                
+                // not appending since there is no child but concatenating
+                cards.innerHTML += movieInfo;
+                
             }
         }      
 
@@ -81,41 +96,212 @@
             var type = singleMovie.Type;
             var poster = singleMovie.Poster;
             // clear the existing item in the div before adding items
-            movieBody.innerHTML = '';
+            cards.innerHTML = '';
             var movieContainer = document.createElement('div');
+
             // using template literal to append items
             var movieInfo = 
-            `<div class="movies">
-                <p>Title: ${title}, Year: ${year}, IMDB ID: ${imdbID}</p>
-                <img class="posters" src="${poster}">
-            </div>
-            
-            `
-            movieContainer.innerHTML = movieInfo;
-            console.log(movieInfo);
-            movieBody.appendChild(movieContainer);
-            
+                `
+                <div class="col-md-12">
+                    <div class="card">
+                        <img class="card-img-top" src="${poster}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">${title}</h5>
+                            <p class="card-text">Year: ${year}, IMDB ID: ${imdbID}, Type: ${type}</p>
+                        </div>
+                    </div>
+                </div>
+                `  
+              // not appending since there is no child but concatenating
+              cards.innerHTML += movieInfo;
         }      
         
     }); // <--- end of document readiness check
     </script>
 
+<style>
+
+    /* Animation properties */
+    .movie {
+      animation: movie 6s ease-out ;
+    }
+    .phone {
+      animation: phone 6s ease-out;
+    }
+    .byline {
+      animation: move-byline 6s linear ;
+    }
+    
+    /* Keyframes */
+    @keyframes movie {
+      0% {
+        opacity: 0;
+        transform: scale(1.5) translateY(-0.75em);
+      }
+      20% {
+        opacity: 1;
+      }
+      89% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      99% {
+        opacity: 0;
+        transform: translateZ(-1000em);
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    
+    @keyframes phone {
+      0% {
+        opacity: 0;
+        transform: scale(1.5) translateY(0.5em);
+      }
+      20% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      99% {
+        opacity: 0;
+        transform: translateZ(-1000em);
+      }
+      100% {
+        opacity: 1;
+      }
+
+    }
+    
+    @keyframes move-byline {
+      0% {
+        transform: translateZ(5em);
+      }
+      100% {
+        transform: translateZ(0);
+      }
+    }
+    
+    /* Make the 3D work on the container */
+    .movie-phone {
+      perspective: 800px;
+      transform-style: preserve3d;
+    }
+    
+    /* General styles and layout */
+    body {
+      background-image: url('images/stars-background.jpg');
+    }
+    
+    .search {
+        margin-top: 450px;
+    }
+
+    .movie-phone {
+      height: 17em;
+      left: 50%;
+      position: absolute;
+      top: 38%;
+      transform: translate(-50%, -50%);
+      width: 34em;
+    }
+    
+    .byline span {
+      display: inline-block;
+    }
+    
+    img {
+      width: 100%;
+    }
+    
+    .movie, .phone, .byline {
+      position: absolute;
+    }
+    
+    .movie {
+      top: -0.75em;
+    }
+    
+    .phone {
+      bottom: -0.5em;
+    }
+    
+    .byline {
+      color: #fff;
+      font-family: "ITC Serif Gothic", Lato;
+      font-size: 2.25em;
+      left: -2em;
+      letter-spacing: 0.4em;
+      right: -2em;
+      text-align: center;
+      text-transform: uppercase;
+      top: 42%;
+    }
+    
+    .form-group {
+        margin-top: 30px;    
+    }
+
+    /*** Media queries for adjusting to different screen sizes ***/
+    
+    @media only screen and (max-width: 600px) {
+      .movie-phone {
+        font-size: 10px;
+      }
+    }
+    
+    @media only screen and (max-width: 480px) {
+      .movie-phone {
+        font-size: 7px;
+      }
+    }
+    
+    
+    
+    
+    </style>
+    
     <title>Document</title>
 </head>
 <body>
+    
+<div class= container>
+    
+    <div class="movie-phone">
+        <img src="https://fontmeme.com/permalink/200710/c628abf435e7a8b0bd82da092bfe97b7.png" alt="movie" class="movie">
+        <img src="https://fontmeme.com/permalink/200710/3904b36794c9944ee6b61bd84021030b.png" alt="phone" class="phone">
+        <h2 class="byline" id="byline">A New Search</h2>
+      </div>
+
+<div class="search">
     <button class="btn btn-success" id="getMultItems">Get List</button>
-    
     <button class="btn btn-success" id="getOneItem">Get One</button>
-    
+
+</div>
+<br>
     <div>
         <div class="form-group">
-            <!-- <label for="movieSelection">Select Movie</label> -->
-            <input type="text" class="form-control" id="movieSelection" aria-describedby="" placeholder="Enter movie choice">
+            <input type="text" class="form" id="movieSelection" aria-describedby="" placeholder="Enter movie choice">
+            <input type="text" class="form" id="movieSeriesChoice" aria-describedby="" placeholder="Movie or Series">
+            <input type="text" class="form" id="releaseYear" aria-describedby="" placeholder="Release Year">
         </div>
         <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>   
     </div>
 
-    <div id="movieBody"></div>
-    
+<br>
+
+    <!--- Area for movie cards --->
+    <div id="movieBody">
+        <div class="card-deck" >
+            <div class="row" id="cards">
+
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
