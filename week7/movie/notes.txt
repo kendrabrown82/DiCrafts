@@ -7,3 +7,12 @@ OMDb API: http://www.omdbapi.com/?i=tt3896198&apikey=8c10a0df
 
 Click the following URL to activate your key: http://www.omdbapi.com/apikey.aspx?VERIFYKEY=a2c1fef9-eeab-4c0f-91e6-abe814984744
 If you did not make this request, please disregard this email.
+
+
+
+https://www.omdbapi.com/?apikey=8c10a0df&s=batman
+
+https://www.omdbapi.com/?apikey=8c10a0df&s=batman&y=1989
+
+
+https://www.omdbapi.com/?apikey=8c10a0df&type=movie&s=batman

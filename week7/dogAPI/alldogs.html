@@ -51,6 +51,7 @@
                 imageElement.style.width = "200px";
                 imageHolder.appendChild(imageElement);
             }
+            
             //Appends the button string literal
             function appendImageWay2(data) {
                 console.log("Apending Way 2");
@@ -62,7 +63,7 @@
             function appendRandomImg(data) {
                 console.log("Apending Random Image");
                 var imageElement = document.createElement("img");
-                
+                //getting random image from specified breed
                 var oneItem = data.message[Math.floor(Math.random() * data.message.length)]
                 console.log(oneItem);
                 console.log(data.message.length)

@@ -1,0 +1,16 @@
+
+api: 7be341ddd5b59ee44a44b57480ada5f5
+
+
+api.openweathermap.org/data/2.5/weather?q={city name}&appid=7be341ddd5b59ee44a44b57480ada5f5
+
+
+$.get("https://api.openweathermap.org/data/2.5/weather&appid=7be341ddd5b59ee44a44b57480ada5f5?q=houston"
+
+$.get("https://api.openweathermap.org/data/2.5/weather&appid=?q=?zip"
+
+
+api.openweathermap.org/data/2.5/weather?q=Houston&appid=7be341ddd5b59ee44a44b57480ada5f5
+
+
+https://openweathermap.org/current

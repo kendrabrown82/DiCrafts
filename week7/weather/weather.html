@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <!-- Bootstrap JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    <script type="text/javascript">
+        // confirm document is ready
+        $(document).ready(function () {
+            console.log("ready!");
+        
+        var apiKey = '7be341ddd5b59ee44a44b57480ada5f5';
+        var cButton = document.getElementById("cityButton");
+        var zButton = document.getElementById("zipButton");
+        var infoBody = document.getElementById("dumpInfo");
+        var searchArray = []; // <-- array to store user queries
+        
+
+        // Search by City button
+        cButton.addEventListener('click', function() {
+            var searchByCity = document.getElementById("searchByCity").value;
+            document.getElementById("citySelection").innerHTML = searchByCity;
+            $.get(`https://api.openweathermap.org/data/2.5/weather?q=${searchByCity}&appid=${apiKey}&units=imperial`, function(data) {
+                console.log(data);
+                console.log(searchByCity);
+                getData(data);
+            }) 
+         
+        });
+
+
+        // Search by Zip Code button
+        zButton.addEventListener('click', function() {
+            var searchByZip = document.getElementById("searchByZip").value;
+            document.getElementById("citySelection").innerHTML = searchByZip;
+            if (searchByZip.length > 5) {
+                alert("Invalid Zip");
+            } else {
+                $.get(`https://api.openweathermap.org/data/2.5/weather?q=${searchByZip}&appid=${apiKey}&units=imperial`, function (data) {
+                getData(data);
+                console.log(data);
+                console.log(searchByZip);
+                searchArray.push(searchByZip);
+                
+                })      
+            }  
+        })
+        
+
+        // ------------------ Functions --------------------------- //
+        function getData(data) {   
+            infoBody.innerHTML = '';
+            var temp = data.main.temp;
+            var feelsLike = data.main.feels_like;
+            var humid = data.main.humidity;
+            var weatherDesc = data.weather[0].description
+            
+            // using template literal to append items
+            var wInfo = 
+                `
+                <div class="info">
+                    <p>Temp: ${temp}°F<p>
+                    <p>Feels like: ${feelsLike}°F | Humidity: ${humid}% | Type: ${weatherDesc}</p>
+                </div>
+                
+                `  
+            // not appending since there is no child but concatenating
+            infoBody.innerHTML += wInfo;
+        }      
+        
+    }); // <--- end of document readiness check
+    </script>
+
+    <style>
+    
+    </style>
+    
+    <title>Weather</title>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-poo-storm fa-3x"></i>
+            WEATHER CHECKER
+        </a> 
+    </nav>
+
+    <!-- Weather Info -->
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4" id="citySelection"></h1>
+            <div id="dumpInfo"></div>
+            
+            <hr class="my-4">
+
+    <!-- Search Form -->
+            <div>
+                <div class="form-group">
+                    <input type="text" class="form" id="searchByCity" aria-describedby="" placeholder="Search By City">
+                    <input type="number" class="form" id="searchByZip" aria-describedby="" placeholder="Search By Zip">
+                </div>
+                <button type="submit" class="btn btn-primary" id="cityButton">Search By City</button>   
+                <button type="submit" class="btn btn-primary" id="zipButton">Search By Zip</button>
+                
+            </div>
+        
+        </div> <!-- Jumbotron -->
+
+    </div> <!-- Container -->
+
+</body>
+</html> 
