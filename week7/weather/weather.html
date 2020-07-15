@@ -21,6 +21,8 @@
         var zButton = document.getElementById("zipButton");
         var infoBody = document.getElementById("dumpInfo");
         var searchArray = []; // <-- array to store user queries
+
+        unSplashKey = '';
         
 
         // Search by City button
@@ -33,6 +35,13 @@
                 getData(data);
             }) 
          
+            $.get(`https://api.unsplash.com/search/photos?query=${searchByCity}&client_id=d1qBOH5MPAW7dwZK5tz6WauWK0jQxz7Kz2-X2WdKUtM`, function(uData) {
+                console.log(uData);
+                pickedImg = uData.results[Math.floor(Math.random() * uData.results.length)];
+                var backURL = pickedImg.urls.regular;
+                document.getElementById("jumbo").style.backgroundImage = `url(${backURL})`
+               
+            })
         });
 
 
@@ -79,7 +88,15 @@
     </script>
 
     <style>
-    
+        .jumbotron { 
+            background-size: cover;      
+        }
+
+        h1, p {
+            color: whitesmoke;
+        }
+
+
     </style>
     
     <title>Weather</title>
@@ -96,7 +113,7 @@
 
     <!-- Weather Info -->
     <div class="container">
-        <div class="jumbotron">
+        <div class="jumbotron" id="jumbo">
             <h1 class="display-4" id="citySelection"></h1>
             <div id="dumpInfo"></div>
             
@@ -112,6 +129,7 @@
                 <button type="submit" class="btn btn-primary" id="zipButton">Search By Zip</button>
                 
             </div>
+            
         
         </div> <!-- Jumbotron -->
 
