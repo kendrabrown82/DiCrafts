@@ -5,9 +5,12 @@ const villainName = prompt("Please enter villain's name");
 const heroPerson = new Hero(heroName);
 const villainPerson = new Villain(villainName);
 
+//array of weapons
+const weaponsArr = ["mase", "club", "hammer", "crowbar", "ninja sword", "broad sword", "bubbles"];
+
 //creating and assigning weapons to both characters
-heroPerson.equipWeapon(new Weapon("ninja stars"));
-villainPerson.equipWeapon(new Weapon("taser"));
+heroPerson.equipWeapon(new Weapon(weaponsArr[Math.floor(Math.random() * weaponsArr.length)]));
+villainPerson.equipWeapon(new Weapon(weaponsArr[Math.floor(Math.random() * weaponsArr.length)]));
 
 const hContainer = document.getElementById("hero");
 const vContainer = document.getElementById("villain");
@@ -38,3 +41,4 @@ villainButton.addEventListener("click", function() {
     // update the health of hero after being attacked
     document.getElementById("hHealth").innerHTML = heroPerson.health;
 })
+

@@ -12,7 +12,12 @@ class Person {
     }
 
     attack(person) {
-      person.health -= this.weapon.damage;
+      let hit = Math.floor(Math.random() * 10);
+      if (hit > 3 ) {
+        person.health -= this.weapon.damage;
+      } else {
+        alert("missed");
+      }
     }
 
   }
