@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    $('#generateRandomDoge').click(function () {
-      console.log('button clicked');
-      $.get('https://dog.ceo/api/breeds/image/random')
+  $('#generateRandomDoge').click(function () {
+    console.log('button clicked');
+    $.get('https://dog.ceo/api/breeds/image/random')
       .done(function (data) {
         console.log(data);
         $('#dogoContainer').html(renderDogoImage(data.message));
@@ -9,12 +9,11 @@ $(document).ready(function () {
       .fail(function (error) {
         console.log(error);
       });
-    });
-  
-    function renderDogoImage(image) {
-      return `
-      <img src="${image}" class="mw-100" />
-      `;
-    }
   });
 
+  function renderDogoImage(image) {
+    return `
+      <img src="${image}" class="mw-100" />
+      `;
+  }
+});
