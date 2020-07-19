@@ -22,7 +22,7 @@
         var infoBody = document.getElementById("dumpInfo");
         var searchArray = []; // <-- array to store user queries
 
-        unSplashKey = '';
+        unSplashKey = 'd1qBOH5MPAW7dwZK5tz6WauWK0jQxz7Kz2-X2WdKUtM';
         
 
         // Search by City button
@@ -52,7 +52,7 @@
             if (searchByZip.length > 5) {
                 alert("Invalid Zip");
             } else {
-                $.get(`https://api.openweathermap.org/data/2.5/weather?q=${searchByZip}&appid=${apiKey}&units=imperial`, function (data) {
+                $.get(`https://api.openweathermap.org/data/2.5/weather?zip=${searchByZip}&appid=${apiKey}&units=imperial`, function (data) {
                 getData(data);
                 console.log(data);
                 console.log(searchByZip);
