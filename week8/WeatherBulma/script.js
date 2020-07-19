@@ -22,25 +22,26 @@
         searchQuery = searchType === 'City' ? 'q' : 'zip';
        
         // Weather API Fetch
-        // fetch(`https://api.openweathermap.org/data/2.5/weather?${searchQuery}=${searchValue}&appid=${apiKey}&units=imperial`)
-        // .then(response => response.json())
-        // .then((data) => {
-        //     console.log(data.main);
-        //     getData(data);
-        // })
-        // .catch((err) => {
-        //     console.log('Fetch Failure!');
-        //     console.log(err);
-        // });
+        fetch(`https://api.openweathermap.org/data/2.5/weather?${searchQuery}=${searchValue}&appid=${apiKey}&units=imperial`)
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data.main);
+            getData(data);
+        })
+        .catch((err) => {
+            console.log('Fetch Failure!');
+            console.log(err);
+        });
         
         // Unsplash API Fetch
-        fetch(`https://api.unsplash.com/search/photos?query=${searchQuery}&client_id=d1qBOH5MPAW7dwZK5tz6WauWK0jQxz7Kz2-X2WdKUtM`)
+        fetch(`https://api.unsplash.com/search/photos?query=${searchValue}&client_id=d1qBOH5MPAW7dwZK5tz6WauWK0jQxz7Kz2-X2WdKUtM`)
         .then(response => response.json())
         .then((data) => {
             console.log(data);
             pickedImg = data.results[Math.floor(Math.random() * data.results.length)];
             var backURL = pickedImg.urls.regular;
-            document.getElementById("weatherinfo").style.backgroundImage = `url(${backURL})`
+            document.getElementById("weatherimg").style.backgroundRepeat = "no-repeat";
+            document.getElementById("weatherimg").style.backgroundImage = `url(${backURL})`;
         })
             
         
@@ -52,9 +53,9 @@
         infoBody.innerHTML = '';
     
         var wInfo = 
-            `   <h1>${data.name}</h1>
-                <p>Temp: ${data.main.temp}°F<p>
-                <p>Feels like: ${data.main.feels_like}°F | Humidity: ${data.main.humidity}% | Type: ${data.weather[0].description}</p>
+            `   <h1 class="is-size-1 has-text-white">${data.name}</h1>
+                <p class="is-size-2 has-text-white">Temp: ${data.main.temp}°F<p>
+                <p class="is-size-2 has-text-white">Feels like: ${data.main.feels_like}°F | Humidity: ${data.main.humidity}% | Type: ${data.weather[0].description}</p>
             `  
         infoBody.innerHTML = wInfo;
     }      
