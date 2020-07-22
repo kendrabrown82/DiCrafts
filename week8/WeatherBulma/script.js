@@ -17,7 +17,7 @@
         //refactor all this
         if (searchValue === '') {
             alert("Please enter a city");
-        }
+        }ß
         
         searchQuery = searchType === 'City' ? 'q' : 'zip';
        
