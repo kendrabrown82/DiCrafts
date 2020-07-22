@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyDbXhPo5kibKkSDaN6K8FgrlswCxP4ajq4",
+        authDomain: "dcboot-1501a.firebaseapp.com",
+        databaseURL: "https://dcboot-1501a.firebaseio.com",
+        projectId: "dcboot-1501a",
+        storageBucket: "dcboot-1501a.appspot.com",
+        messagingSenderId: "745318812903",
+        appId: "1:745318812903:web:1f16f6fa118faeef12e642",
+        measurementId: "G-7F4K0YJSRS"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    </script>
+
+
+</head>
+<body>
+    <div class="container">
+        <input type="email" id="email" placeholder="email" required>
+
+        <input type="password" id="password" placeholder="password" minlength="6" required>
+
+        <button id="btnLog">Log in</button>
+        <button id="btnSignup">Sign up</button>
+        <button id="btnLogout">Log out</button>
+    </div>
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>
