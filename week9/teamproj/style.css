@@ -1,0 +1,31 @@
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+       
+#container{
+    height: 100%;
+    width: 100%;
+}
+
+#map {
+    height: 100%;
+}
+
+#topTenConfirmed{
+    height:100%;
+}
+
+#renderData{
+    height: 50%;
+}
+
+#worldTotal{
+    height:50%;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
