@@ -1,40 +1,52 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Covid Case Tracker</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfxwu3-PAncezf5PNwdncW-p_AR-j-EdE&callback=initMap&libraries=&v=weekly"
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAOntje_nb9MDRE2p9-b6H2uBtqwSDCT0g&callback=initMap&libraries=&v=weekly"
         defer></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
-    
+
 </head>
 
 <body>
     <nav class="navbar navbar-light bg-light justify-content-between">
         <a class="navbar-brand">Navbar</a>
         <form class="form-inline">
-          <input id="countrySearch" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button id= 'searchButton' class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+            <input id="countrySearch" class="form-control mr-sm-2" type="search" placeholder="Search"
+                aria-label="Search">
+            <button id='searchButton' class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
         </form>
-      </nav>
+    </nav>
+
     <div id='container' class='row'>
-        <div id = 'topTenConfirmed'class = 'col-lg-3'>Top 10 Countries</div>
-        <div id="map" class = 'col-lg-6'></div>
-        <div class = 'col-lg-3'>
-            <div id = 'renderData'>
-                <h2 id="grandTotals">Grand Totals</h2>
-                <canvas id="gtChart"></canvas>
+        <!-- Left Side -->
+        <div id='topTenConfirmed' class='col-lg-3'>
+            <h2 id='topWorld'>Top 10 Countries</h2>
+            <canvas id="topConfirmed"></canvas>
+        </div>
+        <!-- MAP DIV -->
+        <div id="map" class='col-lg-6'></div>
+
+        <!-- Right Side -->
+        <div class='col-lg-3'>
+            <div id='renderData'>
+                <h3 id="countryTotals">Country Totals</h3>
+                <canvas id="searchedTotals"></canvas>
             </div>
 
-            <div id = 'worldTotal'>
-                <h2 id="searchedCity">Searched City</h2>
-                <canvas id="countryChart"></canvas>
+            <div id='worldTotal'>
+                <h3>World Totals</h3>
+                <canvas id="grandTotals"></canvas>
             </div>
         </div>
     </div>
+
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
