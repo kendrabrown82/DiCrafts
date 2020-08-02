@@ -1,6 +1,7 @@
 let map;
 // array to store country information from covid call
 const countryData = [];
+const overLay = [];
 
 // main Google Maps call
 function initMap() {
@@ -26,16 +27,13 @@ function initMap() {
       //console.log(data.data);
       //object to store global stats
       globalInfo = {
-        'New Confirmed': data.data.Global['NewConfirmed'],
-        'New Deaths': data.data.Global['NewDeaths'],
-        'New Recovered': data.data.Global['NewRecovered'],
         'Total Confirmed': data.data.Global['TotalConfirmed'],
         'Total Deaths': data.data.Global['TotalDeaths'],
         'Total Recovered': data.data.Global['TotalRecovered']
       }
 
       // draw pie chart of world wide totals
-      drawChart(globalInfo, 'doughnut', 'grandTotals', false, '');
+      drawChart(globalInfo, 'doughnut', 'grandTotals', true, '');
 
       // for (let c in countryData[0]) {
       //   // getting the slug/country name in order to make another request
@@ -74,8 +72,6 @@ function initMap() {
         //console.log(data.data);
         let contentString = data.data.Countries;
         let countryData = contentString.find(search => country == search.Slug)
-        //console.log(countryData);
-        //let renderData = document.getElementById('renderData');
         //console.log(contentString['NewConfirmed'])
 
         //getting totals from the searched country above and passing it to an object
@@ -106,8 +102,9 @@ function initMap() {
       .catch((error) => {
         console.log(`Error: ${error}`);
       })
+      console.log(overLay);
 
-  })
+  }) // <---- End of Search Country Call
 
 
   // ---- Request to get World Totals ---- //
@@ -140,15 +137,36 @@ function initMap() {
       fillOpacity: 0.35,
       map,
       center: coords,
-      radius: Math.sqrt(drawValue) * 1000
+      radius: Math.sqrt(drawValue) * 500,
+      clickable: true
     });
-  }
+
+    const infoWindowNode = document.createElement('div'); // main containing node for InfoWindow  
+    const node = document.createElement('canvas');    // for chart
+    node.setAttribute("id", "monthComparison");
+    infoWindowNode.appendChild(node);                   // append chart
+
+    var infowindow = new google.maps.InfoWindow({
+      content: infoWindowNode
+    });
+
+    // adding event listener for info window to pop up
+    cityCircle.addListener('click', function () {
+      infowindow.setPosition(cityCircle.center)
+      infowindow.open(map);
+      getDat(document.getElementById('countrySearch').value);
+    });
+
+    ////////-------------
+    //overLay.push(cityCircle);
+
+  } // <-- draw circle
 
 } // <-- initMap()
 
 
 // --------  Draw Chart ------------ //
-// passes in an object of data, as well as DOM info and aspect ratio due to canvas div requirements
+// passes in an object of data, type of chart to draw , DOM element, aspect ratio due to canvas div requirements
 function drawChart(anObject, typeOfBar, domID, aspectRatio, label) {
   const gtBarChart = document.getElementById(domID).getContext('2d');
   const totalsBarChart = new Chart(gtBarChart, {
@@ -160,6 +178,7 @@ function drawChart(anObject, typeOfBar, domID, aspectRatio, label) {
       labels: Object.keys(anObject),
       datasets: [{
         label: label,
+        //colors for all the charts, please change them to ones better suited
         backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(65,105,225, 0.5)', 'rgba(255,153,51, 0.5)', 'rgba(255,255,0, 0.5)', 'rgba(0,128,0, 0.5), rgba(0,153,76, 0.5)', 'rgba(153,0,153, 0.5)', 'rgba(255,20,147, 0.5)', 'rgba(165,42,42, 0.5)', 'rgba(64,224,208, 0.5)', 'rgba(255, 218, 185, 0.5)'],
         borderColor: ['rgb(255, 99, 132)', 'rgb(65,105,225)', 'rgb(255,153,51)', 'rgb(255,255,0)', 'rgb(0,128,0), rgb(0,153,76)', 'rgb(153,0,153)', 'rgb(255,20,147)', 'rgb(165,42,42)', 'rgb(64,224,208)', 'rgb(255, 218, 185)'],
         borderWidth: 1,
@@ -176,135 +195,36 @@ function drawChart(anObject, typeOfBar, domID, aspectRatio, label) {
       "maintainAspectRatio": aspectRatio
     }
   })
+
 }
 
 
 //////////////// Test Area to Junk Eventually ////////////////
 
-// function changeCenter(center) {
-//   axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${center}&key=AIzaSyAOntje_nb9MDRE2p9-b6H2uBtqwSDCT0g`)
-//     .then((response) => {
-//       return response
-//     })
-//     .then((data) => {
-//       map.setCenter(new google.maps.LatLng(data.data.results[0].geometry.location.lat, data.data.results[0].geometry.location.lng));
+    async function getDat(getCountry) {
+      const monthsArr = ['December', 'January', 'February', 'March', 'April', 'May', 'June', 'July'];
+      promiseArr = [];
+      const objTest = {};
+      let tempVar = '';
 
-//     })
-//     .catch((error) => {
-//       console.log('yikes')
-//     })
-//   // return data.data.results[0].geometry.location
-// }
+      for (let i = 1; i <= monthsArr.length; i++) {
+        promiseArr.push(axios.get(`https://covid-api.com/api/reports?date=2020-0${i}-01&q=${getCountry}`));
+      }
+    
+      const collect = await Promise.all(promiseArr);
+      for(let j = 0; j < collect.length; j++) {
+        //console.log(collect[j].data.data[0]);
+        if(collect[j].data.data[0] == null) {
+          console.log("found another undefined item...ignore");
+        } else {
+          tempVar = collect[j].data.data[0].date;
+          objTest[tempVar] = collect[j].data.data[0].confirmed;
+        }
+        console.log(objTest);
+      }
+  
+      drawChart(objTest, 'line', 'monthComparison', true, 'Monthly Comparison');
 
-
-// --------  pie chart test ------------ //
-// const cPie = document.getElementById('grandTotalssss').getContext('2d');
-// const pieChart = new Chart(cPie, {
-//   // The type of chart we want to create
-//   type: 'doughnut',
-
-//   // The data for our dataset
-//   data: {
-//     labels: ['Total Found: 30403', 'Discovered: 2134343', 'Confirmed: 32443', 'Expected', 'Topped'],
-//     datasets: [{
-//       label: 'My First dataset',
-//       backgroundColor: ['rgba(255, 99, 132, 0.2)', 'blue', 'orange', 'purple', 'yellow'],
-//       data: [40, 10, 5, 2, 20]
-//     }]
-//   },
-
-//   // Configuration options go here
-//   options: {
-//     cutoutPercentage: 50,
-//     animation: {
-//       animateScale: true
-//     },
-//     "responsive": true,
-//     "maintainAspectRatio": false
-//   }
-// })
-
-
-/////// example to get lat and long for a country !!!!!!!!!
-// axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=Nigeria&key=AIzaSyDfxwu3-PAncezf5PNwdncW-p_AR-j-EdE")
-//   .then((response) => {
-//     return response
-//   })
-//   .then((data) => {
-//     console.log(data.data.results[0].geometry.location);
-//   })
-
-
-// axios.get('https://api.covid19api.com/summary')
-//   .then((response) => {
-//     return response;
-//   })
-//   .then((data) => {
-//     //console.log(data);
-//     marker.addListener('click', function () {
-//       let contentString = data.data.Global;
-//       console.log(data.data)
-//         let renderData = document.getElementById('renderData');
-
-//         renderData.innerHTML = 
-//         `
-//         <p>New Confirmed: ${contentString['NewConfirmed']}</p>
-//         `
-//         //console.log(contentString);
-
-//     });
-//   })
-//   .catch((error) => {
-//     console.log(`Error: ${error}`);
-//   })
-
-
-//Linking to Google Maps API
-// axios.get('https://maps.googleapis.com/maps/api/geocode/json?', {
-//     params: {
-//       address: location,
-//       key: 'AIzaSyDfxwu3-PAncezf5PNwdncW-p_AR-j-EdE'
-//     }
-//   })
-//   .then(function (response) {
-//     console.log(response)
-//     //return response.data.results[0].geometry.location;
-//   })
-//   .catch(function (error) {
-//     console.log(error);
-//   })
-
-// const citymap = {
-//   chicago: {
-//     center: {
-//       lat: 41.878,
-//       lng: -87.629,
-
-//     },
-//     population: 2714856,
-//     cases: 123039
-//   },
-//   newyork: {
-//     center: {
-//       lat: 40.714,
-//       lng: -74.005
-//     },
-//     population: 8405837,
-//     cases: 2434
-//   }
-// };
-
-
-// for (const city in citymap) {
-//   // Add the circle for this city to the map.
-//   const cityCircle = new google.maps.Circle({
-//     strokeColor: "white",
-//     strokeOpacity: 0.8,
-//     strokeWeight: 2,
-//     fillColor: "red",
-//     fillOpacity: 0.35,
-//     map,
-//     center: citymap[city].center,
-//     radius: Math.sqrt(citymap[city].cases) * 1000
-//   });
-// }
+     
+  } // <--- getDat()
+      

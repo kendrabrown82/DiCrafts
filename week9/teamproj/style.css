@@ -1,31 +1,118 @@
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-       
-       #container{
-        height: 100%;
-        width: 100%;
-      }
-      
-      #map {
-       height: 100%;
-     }
 
-     #topTenConfirmed{
-       height:85%;
-     }
+#container {
+  height: 100%;
+  width: 100%;
+}
 
-     #renderData{
-       height: 45%;
-     }
+#map {
+  height: 100%;
+}
 
-     #worldTotal{
-       height: 45%;
-     }
-     
-     /* Optional: Makes the sample page fill the window. */
-     html,
-     body {
-       height: 100%;
-       margin: 0;
-       padding: 0;
-     }
+#topTenConfirmed {
+  height: 100%;
+}
+
+#renderData {
+  height: 100%;
+}
+
+#worldTotal {
+  height: 100%;
+}
+
+
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Map CSS */
+.mapH {
+  height: 400px;
+  
+}
+
+@media screen and (max-width: 600px) {
+  .mapH {
+    height: 300px;
+  }
+}
+
+/*
+@media screen and (max-width: 600px) {
+  .form {
+    float: left;
+  }
+  input[type="search"] {
+    float: left;
+  }
+  input[type="submit"] {
+    float: left;
+  }
+ } /*
+/* W3 Styles */
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Raleway", sans-serif
+}
+
+.chartH {
+  height: 400px;
+}
+
+.size {
+  font-size: x-large;
+  color: #000;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: black;
+}
+
+.border-4 {
+  border-width: 4px !important;
+}
+
+.border-3 {
+  border-bottom-width: 3px !important;
+}
+
+.margT {
+  margin-top: 200px;
+}
+
+
+
+
+/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. 
+This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
+
+@media screen and (max-width: 600px) {
+  .navbar.responsive {
+    position: relative;
+  }
+
+  .navbar.responsive li.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .navbar.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+
+}

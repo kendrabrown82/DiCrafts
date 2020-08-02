@@ -16,3 +16,35 @@ https://covid-api.com/api/reports?date=&q=&iso=&region_name=&region_province=
 
 background-color: #f3e8e3;
 box-shadow: 0 5px 5px #888;
+
+
+
+https://api.covid19api.com/total/country/south-africa/status/confirmed?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z
+
+https://api.covid19api.com/live/country/south-africa/status/confirmed/date/2020-03-21T13:13:30Z
+
+
+
+----------------------------------------
+
+https://documenter.getpostman.com/view/10724784/SzYXWz3x?version=latest
+
+https://covid-api.com/api/reports?date=&q=&iso=&region_name=&region_province=
+
+PARAMS
+date
+The date of report in the format Y-m-d | default current date
+
+q
+The query string for search by country/region and province
+
+iso
+Filter by country ISO code
+
+region_name
+Filter by country/region name
+
+region_province
+Filter by province name
+
+---------
