@@ -232,8 +232,16 @@ function drawChart(anObject, typeOfBar, domID, aspectRatio, label) {
         animateScale: true
       },
       "responsive": true,
-      "maintainAspectRatio": aspectRatio
-    }
+      "maintainAspectRatio": aspectRatio,
+
+      legend: {
+        labels: {
+            boxWidth: 30,
+            fontSize: 20
+        }  
+      }
+    } // <-- options
+
   })
 
 }
