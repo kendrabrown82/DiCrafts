@@ -22,6 +22,13 @@
   height: 100%;
 }
 
+#search {
+  float: right;
+}
+
+.dash {
+  padding: 10px;
+}
 
 /* Optional: Makes the sample page fill the window. */
 html,
@@ -34,7 +41,6 @@ body {
 /* Map CSS */
 .mapH {
   height: 400px;
-  
 }
 
 @media screen and (max-width: 600px) {
@@ -92,8 +98,6 @@ h5 {
 }
 
 
-
-
 /* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. 
 This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
 
@@ -114,5 +118,5 @@ This class makes the topnav look good on small screens (display the links vertic
     text-align: left;
   }
 
-
 }
+

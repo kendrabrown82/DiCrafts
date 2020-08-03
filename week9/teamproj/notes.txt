@@ -48,3 +48,12 @@ region_province
 Filter by province name
 
 ---------
+
+Next things to do....
+
+- Color the circles based of ranges of totals
+- Make more items clickable
+I.E.
+clicking on a circle on the map immediately brings up it's status and info window
+click on any of the top countries does the same
+more error checking

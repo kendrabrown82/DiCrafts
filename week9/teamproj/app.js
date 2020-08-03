@@ -15,8 +15,13 @@ function initMap() {
     zoom: 4,
     center: myLatLng
   });
+  
+  const tButton = document.getElementById("toggleCircles");
+  tButton.addEventListener("click", function() {
+    toggleCircles(overLay);
+  });
 
-
+ 
   // -------- COVID and Google Maps API to Draw Circles -------- //
   axios.get('https://api.covid19api.com/summary')
     .then((response) => {
@@ -46,7 +51,7 @@ function initMap() {
           .then((lResp) => {
             // combining data from countryData array and google geocode request to get country name, total confirmed, and lat/long
             //console.log(countryData[0][c]['Country'], countryData[0][c]['TotalConfirmed'], lResp.data.results[0].geometry.location);
-            
+
             //function to draw circles on map
             drawCircles(lResp.data.results[0].geometry.location, countryData[0][c]['TotalConfirmed']);
           })
@@ -69,7 +74,9 @@ function initMap() {
     } else {
       country = country.replace(/\s+/g, '-').toLowerCase();
     }
-    
+    //hide existing circle
+    hideCircles(overLay);
+
     axios.get(`https://api.covid19api.com/summary`)
       .then((response) => {
         return response;
@@ -102,7 +109,7 @@ function initMap() {
           .catch((error) => {
             console.log(`${error}... yikes`);
           })
-      })
+       })
       .catch((error) => {
         console.log(`Error: ${error}`);
       })
@@ -132,7 +139,7 @@ function initMap() {
 
   //---- Draw circles on map based on lat/long coords and Total Confirmed(drawValue) ----//
   function drawCircles(coords, drawValue) {
-    //hideCircles(overLay);
+
     const cityCircle = new google.maps.Circle({
       strokeColor: "white",
       strokeOpacity: 0.8,
@@ -141,42 +148,60 @@ function initMap() {
       fillOpacity: 0.35,
       map,
       center: coords,
-      radius: Math.sqrt(drawValue) * 500,
+      radius: Math.sqrt(drawValue) * 750,
       clickable: true
     });
 
+    //push circle drawn on map to overLay array
+    overLay.push(cityCircle);
+    //console.log(overLay);
+    console.log(cityCircle.visible);
+
     //create div structure for line chart in infowindow in google maps by adding "canvas" child element
-    const infoWindowNode = document.createElement('div');   
-    const node = document.createElement('canvas');    
+    const infoWindowNode = document.createElement('div');
+    const node = document.createElement('canvas');
     node.setAttribute("id", "monthComparison");
-    infoWindowNode.appendChild(node);                   
+    infoWindowNode.appendChild(node);
 
     //create new infowindow using set up above
     var infowindow = new google.maps.InfoWindow({
       content: infoWindowNode
     });
 
-    // adding event listener for info window to pop up and call getDat() to gather monthly data and draw chart by passing in country value
+    //adding event listener for info window to pop up and call getDat() to gather monthly data and draw chart by passing in country value
     cityCircle.addListener('click', function () {
       infowindow.setPosition(cityCircle.center)
       infowindow.open(map);
       getDat(document.getElementById('countrySearch').value);
     });
 
-    //push circle drawn on map to overLay array
-    overLay.push(cityCircle);
-    //console.log(overLay);
+    
 
   } // <-- draw circle
 
 
-  //--------- Remove circles on map --------//
+  //--------- Remove Circles On Map --------//
   function hideCircles(arr) {
-    for(let g = 0; g < arr.length; g++) {
-        arr[g].setOptions({visible:false});
-      }
+    for (let g = 0; g < arr.length; g++) {
+      arr[g].setOptions({
+        visible: false
+      });
+    }
   }
-  
+
+  //-------- Toggle Circle Viewability --------//
+  function toggleCircles(arr) {
+    for (let h = 0; h < arr.length; h++) {
+      if(arr[h].visible === true) {
+        arr[h].setOptions({ visible: false });
+        tButton.innerText = "Show All";
+      } else {
+        arr[h].setOptions({ visible: true });
+        tButton.innerText = "Hide All";
+      }
+    }
+  }
+
 } // <-- initMap()
 
 
@@ -213,35 +238,32 @@ function drawChart(anObject, typeOfBar, domID, aspectRatio, label) {
 
 }
 
-  // ------------  Get Country Monthly Totals and Draw Line Chart ------------ //
-  //A bit of a cluster as various attempts and configurations were tried. Need to come back and refactor when time permits. Ended up using async function and waiting for the multiple get calls to resolve before doing anything with data. Without it, it was populating all the information. Le sigh.
+// ------------  Get Country Monthly Totals and Draw Line Chart ------------ //
+//A bit of a cluster as various attempts and configurations were tried. Need to come back and refactor when time permits. Ended up using async function and waiting for the multiple get calls to resolve before doing anything with data. Without it, it was populating all the information. Le sigh.
 
-    async function getDat(getCountry) {
-      const monthsArr = ['December', 'January', 'February', 'March', 'April', 'May', 'June', 'July'];
-      //array to store the promises
-      promiseArr = [];
-      //object to store the monthly totals and pass to drawChart()
-      const objTest = {};
-      let tempVar = '';
+async function getDat(getCountry) {
+  const monthsArr = ['December', 'January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  //array to store the promises
+  promiseArr = [];
+  //object to store the monthly totals and pass to drawChart()
+  const objTest = {};
+  let tempVar = '';
 
-      for (let i = 1; i <= monthsArr.length; i++) {
-        promiseArr.push(axios.get(`https://covid-api.com/api/reports?date=2020-0${i}-01&q=${getCountry}`));
-      }
-      //another reason to wait and get a Promise.all() is so the calls are made in the expected order of months so we don't need to attempt to sort whatever return we get from the promise
-      const collect = await Promise.all(promiseArr);
-      for(let j = 0; j < collect.length; j++) {
-        //testing if data found was null/unidentified cause it would stop unless checking
-        if(collect[j].data.data[0] == null) {
-          console.log("found another undefined item...ignore");
-        } else {
-          tempVar = collect[j].data.data[0].date;
-          objTest[tempVar] = collect[j].data.data[0].confirmed;
-        }
-        //console.log(objTest);
-      }
+  for (let i = 1; i <= monthsArr.length; i++) {
+    promiseArr.push(axios.get(`https://covid-api.com/api/reports?date=2020-0${i}-01&q=${getCountry}`));
+  }
+  //another reason to wait and get a Promise.all() is so the calls are made in the expected order of months so we don't need to attempt to sort whatever return we get from the promise
+  const collect = await Promise.all(promiseArr);
+  for (let j = 0; j < collect.length; j++) {
+    //testing if data found was null/unidentified cause it would stop unless checking
+    if (collect[j].data.data[0] == null) {
+      console.log("found another undefined item...ignore");
+    } else {
+      tempVar = collect[j].data.data[0].date;
+      objTest[tempVar] = collect[j].data.data[0].confirmed;
+    }
+    //console.log(objTest);
+  }
 
-      drawChart(objTest, 'line', 'monthComparison', true, 'Monthly Comparison');
-  } // <--- getDat()
-      
-
-  
+  drawChart(objTest, 'line', 'monthComparison', true, 'Monthly Confirmed Totals');
+} // <--- getDat()
