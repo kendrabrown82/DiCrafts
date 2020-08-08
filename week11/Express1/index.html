@@ -7,14 +7,24 @@
 <body>
 
 <div>
-    <input id ='title' type = "text" placeholder="title">
-    <input id ='content' type = "text" placeholder="content">
-    <button id="btn" type="button">Submit</button>
+    <button id="get" class="btn btn-info m-2">GET</button>
+</div>
+<div>
+    <button id="post" class="btn btn-primary m-2">POST</button>
+    <input id ='title' type = "text" placeholder="new title">
+    <input id ='content' type = "text" placeholder="new content"> 
 </div>
 
 <div>
-    <p id="info"></p>
+    <button id="put" class="btn btn-success m-2">PUT</button>
+    <input id ='putId' type = "number" placeholder="ID to update">
+    <input id ='putTitle' type = "text" placeholder="updated title">
+    <input id ='putContent' type = "text" placeholder="updated content"> 
 </div>
+
+<hr/>
+
+<div id="info"></div>
 
 
 </body>

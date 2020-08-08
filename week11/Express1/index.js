@@ -60,5 +60,6 @@ app.post('/comments', function (req, res) {
     res.send('New Comment Created');
 })
 //PORT ENVIRONMENT VARIABLE
-const port = 8040;
+const port = 8020;
 app.listen(port, () => console.log(`Listening on port ${port}..`));
+
