@@ -1,0 +1,84 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="jumbotron jumbotron-fluid text-center">
+        <h1 class="display-4">Mini Assignment</h1>
+        <p class="lead">This assignment is a demonstration of connecting a front end app to the backend.</p>
+    </div>
+    <div class="container-fluid">
+
+        <div class="row mt-5">
+            <!-- Left Section of Basic Website -->
+            <div class="col-5" style="background-color: aqua;">
+                <div class="postForm text-center">
+                    <h3>Post your Title and Content below!</h3>
+                    <div class="form-group">
+                        <input id='title' class="form-control form-control-lg" type="text" placeholder="title">
+                        <input id='content' class="form-control form-control-lg" type="text" placeholder="content">
+                        <button id="btn" type="submit" class="btn btn-primary btn-lg"
+                            style="width: 100px">Submit</button>
+                    </div>
+                </div>
+
+
+                <div class="postForm text-center">
+                    <h3>Retrieve your Values</h3>
+                    <div class="form-group">
+                        <form onsubmit="event.preventDefault();">
+                        <div class="form-row align-items-center">
+                            <div class="col-auto my-1">
+                              <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
+                              <select class="custom-select mr-sm-2" id="findTitle">
+                                <option selected place>Search by Title</option>
+
+                              </select>
+                            </div>
+                        <input id='content' class="form-control form-control-lg" type="text" placeholder="content">
+                        <button id="getBtn" type="submit" class="btn btn-primary
+                            style="width: 100px">Get One Blog</button>
+                        <button id="getBtnAll" type="submit" class="btn btn-primary"
+                            style="width: 100px">Get All</button>
+                        <button id="deleteBtn" type="submit" class="btn btn-primary"
+                            style="width: 100px">Delete Selected</button>
+                        <button id="deleteBtnAll" type="submit" class="btn btn-primary"
+                            style="width: 150px">Delete EVERYTHING</button>
+                        
+                    </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-2">
+
+            </div>
+
+            <div class="col-5" style="background-color: aqua;">
+               <div class="showResults"></div>
+
+
+                
+            </div>
+
+        </div>
+        <div>
+            <p id="info"></p>
+        </div>
+
+    </div>
+
+    <div class="row pt-5">
+
+    </div>
+
+    </div>
+
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="app.js"></script>
+
+</html>
