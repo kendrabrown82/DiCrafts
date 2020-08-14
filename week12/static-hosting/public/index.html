@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link 
+    rel="stylesheet" 
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+    crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="./blog.js"></script>
+    <title>My pretty pretty blog</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <h1>My Pretty Pretty Blog</h1>
+      </div>
+      
+      <div class="row" id="blogPosts">
+      </div>
+
+      <div class="row">
+          <input class="col-9 mb-2" type="text" id="title" name="title" placeholder="Blog Title">
+          <textarea class="col-9 mb-4" id="content" name="content" placeholder="Blog content"></textarea>
+          <button class="col-9" id="createPost">Create Post</button>
+      </div>
+
+    </div>
+  </body>
+</html>
