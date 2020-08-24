@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link 
+    rel="stylesheet" 
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
+    crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="./music.js"></script>
+    <title>Music</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <!-- <div id="artists-list" class="col-4 m-2"></div>
+        <div id="albums-list" class="col-4 m-2"></div> -->
+
+        <div class="col-4 m-2">
+          <select id="artists-select" class="custom-select">
+            <option disabled selected>Select an Artist</option>
+          </select>
+        </div>
+        <div class="col-4 m-2">
+          <select id="albums-select" class="custom-select">
+            <option disabled selected>Select an Album</option>
+          </select>
+        </div>
+        <div class="col-4 m-2">
+          <button id="link-artists-album" type="button" class="btn btn-primary">Link Album and Artist</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
