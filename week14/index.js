@@ -45,40 +45,51 @@ app.get('/api/posts', function (req, res) {
 });
 
 
-// get a single tweet
+// get a single tweet and replies associated
 app.get('/api/posts/:id', function (req, res) {
     let reqId = req.params.id;
-    db.query(`SELECT posts.tweet, posts.date_of_tweet, posts.user_who_left_tweet, replies.reply, replies.date_of_reply
-              FROM posts
-              JOIN replies ON posts.id = replies.post_id
-              WHERE posts.id = ${reqId}`)
-        .then(function (oneItem) {
-            console.log(oneItem);
-            res.send(oneItem);
-        });
+    if (reqId != '') {
+        db.query(`SELECT posts.tweet, posts.date_of_tweet, posts.user_who_left_tweet, replies.reply, replies.date_of_reply
+                FROM posts
+                JOIN replies ON posts.id = replies.post_id
+                WHERE posts.id = ${reqId}`)
+            .then(function (oneItem) {
+                console.log(oneItem);
+                res.send(oneItem);
+            });
+    } else {
+        res.send("Please select a valid Tweet ID...");
+    }
 });
 
 
 // post a tweet
 app.post('/api/insert', function (req, res) {
     //console.log(req.body);
-    db.query(`INSERT INTO posts ("tweet", "user_who_left_tweet") VALUES('${req.body.tweet}', '${req.body.name}') RETURNING *`)
-        .then((results) => {
-            res.json(results);
-        })
-     
+    if (req.body.tweet != '' || req.body.name != '') {
+        db.query(`INSERT INTO posts ("tweet", "user_who_left_tweet", "is_tweet_deleted") VALUES('${req.body.tweet}', '${req.body.name}', 'FALSE') RETURNING *`)
+            .then((results) => {
+                res.json(results);
+                console.log(results);
+            })
+    } else {
+        res.send("Please enter a name and tweet");
+    }
 });
 
 
-// post a reply
+// post a reply 
+// ------ find a way to get post_id from front end to put into query below -------
 app.post('/api/reply', function (req, res) {
-    db.query(`INSERT INTO replies (post_id, reply, date_of_reply, is_reply_deleted)
-    VALUES (4, 'bassdfdshh', '1989/05/16', FALSE)`)
-        .then(function (item) {
-            console.log(item);
-            res.json(item);
-        });
-
+    //console.log(req.body);
+    if (req.body.reply != '') {
+        db.query(`INSERT INTO replies (post_id, reply, is_reply_deleted)
+        VALUES (4, '${req.body.reply}', FALSE)`)
+            .then(function (item) {
+                console.log(item);
+                res.json(item);
+            });
+    }
 });
 
 
@@ -86,12 +97,16 @@ app.post('/api/reply', function (req, res) {
 // delete a tweet
 app.get('/api/delete/:id', function (req, res) {
     let reqId = req.params.id;
-    db.query(`UPDATE posts SET is_tweet_deleted = TRUE WHERE id = ${reqId}`)
-        .then(function (delItem) {
-            console.log(delItem);
-            res.json(delItem);
+    if (reqId != '' || !reqId) {
+        db.query(`UPDATE posts SET is_tweet_deleted = TRUE WHERE id = ${reqId}`)
+            .then(function (delItem) {
+                console.log(delItem);
+                res.json(delItem);
 
-        });
+            });
+    } else {
+        res.send("Please select a valid tweet ID")
+    }
 
 });
 
@@ -100,11 +115,15 @@ app.get('/api/delete/:id', function (req, res) {
 // delete a reply
 app.get('/api/deletereply/:id', function (req, res) {
     let reqId = req.params.id;
-    db.query(`UPDATE replies SET is_reply_deleted = TRUE WHERE id = ${reqId}`)
-        .then(function (delReply) {
-            console.log(delReply);
-            res.json(delReply);
-        });
+    if (reqId != '' || !reqId) {
+        db.query(`UPDATE replies SET is_reply_deleted = TRUE WHERE id = ${reqId}`)
+            .then(function (delReply) {
+                console.log(delReply);
+                res.json(delReply);
+            });
+    } else {
+        res.send("Please select a valid reply ID");
+    }
 });
 
 
